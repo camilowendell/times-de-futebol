@@ -1,48 +1,61 @@
-function drawMatchups() {
-    const rawInput = document.getElementById('teams').value;
-    
-    // Converte o texto em lista de times válidos
-    let teams = rawInput
-        .split('\n')
-        .map(t => t.trim())
-        .filter(t => t.length > 0);
+async function identificarEsporte() {
+    const altura = document.getElementById("altura").value;
+    const forca = document.getElementById("forca").value;
+    const resistencia = document.getElementById("resistencia").value;
+    const equipe = document.getElementById("equipe").value;
 
-    if (teams.length < 2) {
-        alert('Insira pelo menos 2 times para gerar confrontos!');
+    if (!altura || !forca || !resistencia || !equipe) {
+        alert("Por favor, preencha todos os atributos físicos!");
         return;
     }
 
-    // Algoritmo de embaralhamento (Fisher-Yates)
-    for (let i = teams.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [teams[i], teams[j]] = [teams[j], teams[i]];
+    const placeholder = document.getElementById("placeholder");
+    const loader = document.getElementById("loader");
+    const resultado = document.getElementById("resultado");
+
+    // Oculta telas e mostra animação de carregamento
+    placeholder.classList.add("hidden");
+    resultado.classList.add("hidden");
+    loader.classList.remove("hidden");
+
+    // Simulação do tempo de processamento
+    await new Promise(resolve => setTimeout(resolve, 700));
+
+    let esporte = "";
+    let descricao = "";
+
+    // Mapeamento de perfis
+    if (altura === "alta" && equipe === "coletivo") {
+        if (forca === "explosiva") {
+            esporte = "🏀 Basquete";
+            descricao = "Sua grande altura aliada à força explosiva é a combinação ideal para dominar garrafões, enterradas e rebotes!";
+        } else {
+            esporte = "🏐 Vôlei";
+            descricao = "Sua altura oferece uma vantagem natural na rede para bloqueios potentes e ataques precisos.";
+        }
+    } else if (equipe === "coletivo" && resistencia === "alta") {
+        esporte = "⚽ Futebol";
+        descricao = "Sua grande capacidade aeróbica e visão de jogo coletivo farão você dominar a intensidade dos gramados durante os 90 minutos!";
+    } else if (equipe === "individual" && forca === "explosiva") {
+        esporte = "🥋 Artes Marciais (Jiu-Jitsu / Boxe / Judô)";
+        descricao = "Sua força explosiva aliada ao foco individual tornam você um atleta nato para modalidades de combate e estratégia.";
+    } else if (equipe === "individual" && (altura === "baixa" || forca === "leve")) {
+        esporte = "🤸 Ginástica Artística / Atletismo (Arrancadas)";
+        descricao = "Seu centro de gravidade baixo e estrutura leve oferecem agilidade superior, controle corporal e explosão rápida.";
+    } else if (equipe === "individual" && resistencia === "alta") {
+        esporte = "🏊 Natação / Ciclismo de Estrada";
+        descricao = "Você possui alto condicionamento cardiorrespiratório e disciplina mental para encarar provas de longa duração.";
+    } else if (equipe === "individual") {
+        esporte = "🎾 Tênis / Beach Tennis";
+        descricao = "Sua agilidade, tempo de reação e independência farão você se destacar em quadra nos jogos individuais!";
+    } else {
+        esporte = "🤾 Handebol";
+        descricao = "O mix de força física, dinamismo em grupo e velocidade encaixam perfeitamente na prática do handebol!";
     }
 
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = '';
-
-    // Monta os pares de confrontos
-    let matchIndex = 1;
-    while (teams.length >= 2) {
-        const teamA = teams.pop();
-        const teamB = teams.pop();
-
-        const matchCard = document.createElement('div');
-        matchCard.className = 'match-card';
-        matchCard.innerHTML = `
-            <span class="team">${teamA}</span>
-            <span class="vs">VS</span>
-            <span class="team">${teamB}</span>
-        `;
-        resultsDiv.appendChild(matchCard);
-        matchIndex++;
-    }
-
-    // Se o número de times for ímpar, exibe o time que passa direto
-    if (teams.length === 1) {
-        const byeCard = document.createElement('div');
-        byeCard.className = 'bye-card';
-        byeCard.innerText = `⚠️ ${teams[0]} avançou diretamente para a próxima fase (sem adversário nesta rodada).`;
-        resultsDiv.appendChild(byeCard);
-    }
+    // Exibe o resultado
+    loader.classList.add("hidden");
+    document.getElementById("esporte-nome").innerText = esporte;
+    document.getElementById("esporte-descricao").innerText = descricao;
+    resultado.classList.remove("hidden");
 }
