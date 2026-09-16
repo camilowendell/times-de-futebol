@@ -3,90 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descubra Seu Esporte Ideal - Fullscreen</title>
+    <title>Descubra Seu Esporte Ideal</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Camada de Fundo Esportivo -->
     <div class="sports-bg"></div>
 
-    <!-- Painel em Tela Cheia -->
-    <div class="fullscreen-app">
+    <main class="container">
         <header class="header">
-            <div class="badge">⚡ ANÁLISE DE PERFORMANCE FISICA</div>
+            <div class="badge">⚡ ANÁLISE CORPORAL</div>
             <h1>Qual é o seu Esporte Ideal?</h1>
-            <p class="subtitle">Selecione seus atributos corporais e descubra a modalidade perfeita para o seu perfil!</p>
+            <p class="subtitle">Preencha seus atributos físicos para encontrarmos a modalidade perfeita para o seu perfil!</p>
         </header>
 
-        <main class="content-grid">
-            <!-- Formulário -->
-            <form id="sport-form" class="form-section">
-                <div class="grid-inputs">
-                    <div class="form-group">
-                        <label for="altura">📏 Sua Altura:</label>
-                        <select id="altura" required>
-                            <option value="">Selecione...</option>
-                            <option value="baixa">Abaixo de 1,65m (Baixa)</option>
-                            <option value="media">Entre 1,65m e 1,80m (Média)</option>
-                            <option value="alta">Acima de 1,80m (Alta)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="forca">💪 Nível de Força / Físico:</label>
-                        <select id="forca" required>
-                            <option value="">Selecione...</option>
-                            <option value="explosiva">Muita força e impacto</option>
-                            <option value="moderada">Força moderada / Físico atlético</option>
-                            <option value="leve">Físico leve / Foco em agilidade</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="resistencia">🏃 Resistência Física (Cardio):</label>
-                        <select id="resistencia" required>
-                            <option value="">Selecione...</option>
-                            <option value="alta">Alta (Corrida constante / Longa duração)</option>
-                            <option value="media">Moderada (Intervalos com pausas)</option>
-                            <option value="curta">Curta (Explosão e tiros rápidos)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="equipe">🤝 Modalidade de Jogo:</label>
-                        <select id="equipe" required>
-                            <option value="">Selecione...</option>
-                            <option value="coletivo">Esporte em Equipe (Coletivo)</option>
-                            <option value="individual">Esporte Individual / Dupla</option>
-                        </select>
-                    </div>
+        <form id="sport-form">
+            <div class="grid-inputs">
+                <!-- Altura -->
+                <div class="form-group">
+                    <label for="altura">📏 Sua Altura:</label>
+                    <select id="altura" required>
+                        <option value="">Selecione...</option>
+                        <option value="baixa">Abaixo de 1,65m (Baixa)</option>
+                        <option value="media">Entre 1,65m e 1,80m (Média)</option>
+                        <option value="alta">Acima de 1,80m (Alta)</option>
+                    </select>
                 </div>
 
-                <button type="button" id="btn-analisar" onclick="identificarEsporte()">
-                    <span>🔍 ANALISAR PERFIL COMPLETO</span>
-                </button>
-            </form>
-
-            <!-- Área Dinâmica: Loader ou Resultado -->
-            <section class="display-section">
-                <div id="placeholder" class="placeholder-box">
-                    <div class="icon-pulse">⚽ 🏀 🏐 🎾</div>
-                    <p>Preencha os dados e clique em analisar para gerar o seu match esportivo.</p>
+                <!-- Força / Físico -->
+                <div class="form-group">
+                    <label for="forca">💪 Nível de Força / Físico:</label>
+                    <select id="forca" required>
+                        <option value="">Selecione...</option>
+                        <option value="explosiva">Muita força e impacto</option>
+                        <option value="moderada">Força moderada / Físico atlético</option>
+                        <option value="leve">Físico leve / Foco em agilidade</option>
+                    </select>
                 </div>
 
-                <div id="loader" class="loader hidden">
-                    <div class="spinner"></div>
-                    <p>Mapeando biotipo e calculando afinidade desportiva...</p>
+                <!-- Resistência -->
+                <div class="form-group">
+                    <label for="resistencia">🏃 Resistência Física (Cardio):</label>
+                    <select id="resistencia" required>
+                        <option value="">Selecione...</option>
+                        <option value="alta">Alta (Corrida constante / Longa duração)</option>
+                        <option value="media">Moderada (Intervalos com pausas)</option>
+                        <option value="curta">Curta (Explosão e tiros rápidos)</option>
+                    </select>
                 </div>
 
-                <div id="resultado" class="result-card hidden">
-                    <div class="result-badge">SUA MODALIDADE IDEAL</div>
-                    <h2 id="esporte-nome">--</h2>
-                    <p id="esporte-descricao">--</p>
+                <!-- Preferência -->
+                <div class="form-group">
+                    <label for="equipe">🤝 Modalidade de Jogo:</label>
+                    <select id="equipe" required>
+                        <option value="">Selecione...</option>
+                        <option value="coletivo">Esporte em Equipe (Coletivo)</option>
+                        <option value="individual">Esporte Individual / Dupla</option>
+                    </select>
                 </div>
-            </section>
-        </main>
-    </div>
+            </div>
+
+            <button type="button" id="btn-analisar" onclick="identificarEsporte()">
+                <span>🔍 ANALISAR MEU PERFIL</span>
+            </button>
+        </form>
+
+        <!-- Animação de Carregamento -->
+        <div id="loader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Analisando biotipo e performance...</p>
+        </div>
+
+        <!-- Painel de Resultado Expandido -->
+        <div id="resultado" class="result-card hidden">
+            <div class="result-badge">SEU MATCH ESPORTIVO</div>
+            <h2 id="esporte-nome">--</h2>
+            <p id="esporte-descricao">--</p>
+        </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
